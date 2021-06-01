@@ -67,23 +67,23 @@ data格式如下：
 }
 ```
 
-> * symbol: swap池的符号，由swap池中两个代币符号链接而成，token2-token1。
+> * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * address: 操作者用于接受token和bsv的地址
-> * op: 操作：1 增加流动性，2 提取流动性，3 使用token1换取token2，4 使用token2换取token1
+> * op: swap操作。1 增加流动性，2 提取流动性，3 使用token1换取token2，4 使用token2换取token1
 
 ### Response
 ```
 {
-    'code': 0,
-    'msg': '',
-    'data': {
+    code: 0,
+    msg: "",
+    data: {
         requestIndex: 1, 
-        tokenToAddress: 'msREe5jsynP65899v1KJCydf6Sc9pJPb8S', 
-        bsvToAddress: 'mzJR1zKcZCZvMJj87rVqmFFxmaVEe62BBW', 
+        tokenToAddress: "msREe5jsynP65899v1KJCydf6Sc9pJPb8S", 
+        bsvToAddress: "mzJR1zKcZCZvMJj87rVqmFFxmaVEe62BBW", 
         txFee: 10000, 
-        swapToken1Amount: '100000', 
-        swapToken2Amount: '1000000', 
-        swapLpAmount: '1000000',
+        swapToken1Amount: "100000", 
+        swapToken2Amount: "1000000", 
+        swapLpAmount: "1000000",
         op: 1
     },
 }
@@ -99,7 +99,7 @@ data格式如下：
 > * swapToken1Amount: swap池中token1即bsv的总数量, 类型为BigInt.toString()
 > * swapToken2Amount: swap池中token2即ssp的总数量，类型为BigInt.toString()
 > * swapLpAmount: swap池中lp token的总数量, 类型为BigInt.toString()
-> * op: 操作类型
+> * op: swap操作类型
 
 ## 4. 增加流动性
 
@@ -111,24 +111,30 @@ data格式如下：
 {
     symbol: "ssp-bsv",
     requestIndex: 1,
-    tokenTxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
-    tokenOutputIndex: 1,
-    bsvAddAmount: "100000",
+    token1TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
+    token1OutputIndex: 1,
+    token2TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
+    token2OutputIndex: 1,
+    token1AddAmount: "100000",
 }
 ```
 
-> * symbol: swap池的符号，由swap池中两个代币符号链接而成，token2-token1。
+> * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * requestIndex: 之前通过reqswapargs获取的编号。
-> * tokenTxID: token转账tx的id。
-> * tokenOutputIndex: token转账tx的outputIndex。
+> * token1TxID: bsv转账tx的id。
+> * token1OutputIndex: bsv转账tx的outputIndex。
+> * token2TxID: token转账tx的id。
+> * token2OutputIndex: token转账tx的outputIndex。
 > * token1AddAmount: 往swap池中添加的token1的数量, 类型为BigInt.toString()
+
+注意：这里转账的bsv数量为txFee + token1AddAmount
 
 ### Response
 ```
 {
-    'code': 0,
-    'msg': "",
-    'data': "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3"
+    "code": 0,
+    "msg": "",
+    "data": "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3"
 }
 ```
 code为0时，表示正常返回data, 其值为swap操作的txid。code为1时，表示由错误。错误信息在msg中。
@@ -137,38 +143,94 @@ code为0时，表示正常返回data, 其值为swap操作的txid。code为1时�
 
 ### Request
 - Methos: **POST**
-- URL: ```/addliq```
+- URL: ```/removeliq```
 - Body: 
 ```
 {
     symbol: "bsv-ssp",
     requestIndex: 1,
-    tokenTxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
-    tokenOutputIndex: 1,
-    token1AddAmount: "10000",
+    lpTokenTxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
+    lpTokenOutputIndex: 1,
 }
 ```
 
-> * symbol: swap池的符号，由swap池中两个代币符号链接而成，token2-token1。
+> * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * requestIndex: 之前通过reqswapargs获取的编号。
-> * tokenTxID: token转账tx的id。
-> * tokenOutputIndex: token转账tx的outputIndex。
-> * token1AddAmount: 往swap池中添加的token1的数量, 类型为BigInt.toString()
+> * lpTokenTxID: lpToken转账tx的id。
+> * lpTokenOutputIndex: lpToken转账tx的outputIndex。
 
 ### Response
 ```
 {
-    'code': 0,
-    'msg': '',
-    'data': "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3"
+    "code": 0,
+    "msg": "",
+    "data": "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3"
 }
 ```
 code为0时，表示正常返回data, 其值为swap操作的txid。code为1时，表示由错误。错误信息在msg中。
 
 ## 6. 交换token1到token2
 
-**TODO**
+把token1交换为token2
+
+### Request
+- Method: **POST**
+- URL: ```/token1totoken2```
+- Body: 
+```
+{
+    symbol: "bsv-ssp",
+    requestIndex: 1
+    token1TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
+    token1OutputIndex: 1,
+    token1AddAmount: "100000",
+}
+```
+> * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
+> * requestIndex: 之前通过reqswapargs获取的编号。
+> * token1TxID: bsv转账tx的id。
+> * token1OutputIndex: bsv转账tx的outputIndex。
+> * token1AddAmount: 需要交换的token1(bsv)的数量, 类型为BigInt.toString()
+
+注意：这里转账的bsv数量为txFee + token1AddAmount
+
+### Response
+```
+{
+    "code": 0,
+    "msg": "",
+    "data": "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3"
+}
+```
+code为0时，表示正常返回data, 其值为swap操作的txid。code为1时，表示由错误。错误信息在msg中。
 
 ## 7. 交换token2到token1
 
-**TODO**
+把token2交换为token1
+
+### Request
+- Method: **POST**
+- URL: ```/token2totoken1```
+- Body:
+```
+{
+    symbol: "bsv-ssp",
+    requestIndex: 1
+    token2TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
+    token2OutputIndex: 1,
+}
+```
+> * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
+> * requestIndex: 之前通过reqswapargs获取的编号。
+> * token2TxID: token2转账tx的id。
+> * token2OutputIndex: token2转账tx的outputIndex。
+
+### Response
+```
+{
+    "code": 0,
+    "msg": "",
+    "data": "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3"
+}
+```
+code为0时，表示正常返回data, 其值为swap操作的txid。code为1时，表示由错误。错误信息在msg中。
