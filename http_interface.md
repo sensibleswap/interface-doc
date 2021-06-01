@@ -101,7 +101,7 @@ data格式如下：
 > * swapLpAmount: swap池中lp token的总数量, 类型为BigInt.toString()
 > * op: 操作类型
 
-## 3. 增加流动性
+## 4. 增加流动性
 
 ### Request
 - Methos: **POST**
@@ -133,7 +133,7 @@ data格式如下：
 ```
 code为0时，表示正常返回data, 其值为swap操作的txid。code为1时，表示由错误。错误信息在msg中。
 
-## 4. 提取流动性
+## 5. 提取流动性
 
 ### Request
 - Methos: **POST**
@@ -165,6 +165,10 @@ code为0时，表示正常返回data, 其值为swap操作的txid。code为1时�
 ```
 code为0时，表示正常返回data, 其值为swap操作的txid。code为1时，表示由错误。错误信息在msg中。
 
-## 5. 交换token1到token2
+## 6. 交换token1到token2
 
-## 6. 交换token2到token1
+**TODO**
+
+## 7. 交换token2到token1
+
+**TODO**
