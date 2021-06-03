@@ -11,7 +11,7 @@
 {
     "code":0,
     "data":{
-        "bsv-ssp":[
+        "bsv-ssp": {
             "token1": {
                 "symbol":"bsv",
                 "tokenID":"",
@@ -24,7 +24,7 @@
                 "genesisHash":"5de90b9c12d2975a79b67a5f7a2b037f1aad16b0",
                 "codeHash":"c9c23794ad9a1899e96482780065c74cf78c3060"
             }
-        ]
+        }
     }
 }
 ```
