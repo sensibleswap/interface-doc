@@ -47,7 +47,9 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
     data: {
         swapToken1Amount: "100000",
         swapToken2Amount: "100000",
-        swapLpAmount: "100000"
+        swapLpAmount: "100000",
+        swapFeeRate: 25,
+        projFeeRate: 5,
     }
 }
 ```
@@ -59,6 +61,8 @@ data格式如下：
 > * swapToken1Amount: swap池中token1即bsv的总数量, 类型为BigInt.toString()
 > * swapToken2Amount: swap池中token2即ssp的总数量，类型为BigInt.toString()
 > * swapLpAmount: swap池中lp token的总数量, 类型为BigInt.toString()
+> * swapFeeRate: swap池进行交换时的收取的总费率
+> * projFeeRate: swap池进行交换时收取的项目费率
 
 ## 3. 请求swap操作
 
