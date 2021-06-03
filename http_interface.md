@@ -10,10 +10,22 @@
 ```
 {
     "code":0,
-    "msg": "",
-    "data":[
-        {"symbol":"bsv-ssp","token1":"bsv","token2":"ssp"}
+    "data":{
+        "bsv-ssp":[
+            "token1": {
+                "symbol":"bsv",
+                "tokenID":"",
+                "genesisHash":"",
+                "codeHash":""
+            },
+            "token2": {
+                "symbol":"sspt\u0000\u0000\u0000\u0000\u0000\u0000",
+                "tokenID":"2b5c37d535cc7f822022b2bc8ce502c480563de08ec7e7130777cab55337be2100000000",
+                "genesisHash":"5de90b9c12d2975a79b67a5f7a2b037f1aad16b0",
+                "codeHash":"c9c23794ad9a1899e96482780065c74cf78c3060"
+            }
         ]
+    }
 }
 ```
 
