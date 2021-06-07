@@ -93,13 +93,15 @@ data格式如下：
     code: 0,
     msg: "",
     data: {
-        requestIndex: 1, 
+        requestIndex: "1", 
         tokenToAddress: "msREe5jsynP65899v1KJCydf6Sc9pJPb8S", 
         bsvToAddress: "mzJR1zKcZCZvMJj87rVqmFFxmaVEe62BBW", 
         txFee: 10000, 
         swapToken1Amount: "100000", 
         swapToken2Amount: "1000000", 
         swapLpAmount: "1000000",
+        swapFeeRate: 25,
+        projFeeRate: 5,
         op: 1
     },
 }
@@ -115,6 +117,8 @@ data格式如下：
 > * swapToken1Amount: swap池中token1即bsv的总数量, 类型为BigInt.toString()
 > * swapToken2Amount: swap池中token2即ssp的总数量，类型为BigInt.toString()
 > * swapLpAmount: swap池中lp token的总数量, 类型为BigInt.toString()
+> * swapFeeRate: swap池进行交换时的收取的总费率
+> * projFeeRate: swap池进行交换时收取的项目费率
 > * op: swap操作类型
 
 ## 4. 增加流动性
@@ -126,7 +130,7 @@ data格式如下：
 ```
 {
     symbol: "ssp-bsv",
-    requestIndex: 1,
+    requestIndex: "1",
     token1TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
     token1OutputIndex: 1,
     token2TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
@@ -164,7 +168,7 @@ code为0时，表示正常返回data, 其值为swap操作的txid。code为1时�
 ```
 {
     symbol: "bsv-ssp",
-    requestIndex: 1,
+    requestIndex: "1",
     lpTokenTxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
     lpTokenOutputIndex: 1,
 }
@@ -196,7 +200,7 @@ code为0时，表示正常返回data, 其值为swap操作的txid。code为1时�
 ```
 {
     symbol: "bsv-ssp",
-    requestIndex: 1
+    requestIndex: "1"
     token1TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
     token1OutputIndex: 1,
     token1AddAmount: "100000",
@@ -231,7 +235,7 @@ code为0时，表示正常返回data, 其值为swap操作的txid。code为1时�
 ```
 {
     symbol: "bsv-ssp",
-    requestIndex: 1
+    requestIndex: "1"
     token2TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
     token2OutputIndex: 1,
 }
