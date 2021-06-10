@@ -171,6 +171,8 @@ code为0时，表示正常返回data, 其值为swap操作的txid。code为1时�
     requestIndex: "1",
     lpTokenTxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
     lpTokenOutputIndex: 1,
+    minerFeeTxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
+    minerFeeTxOutputIndex: 0,
 }
 ```
 
@@ -178,6 +180,8 @@ code为0时，表示正常返回data, 其值为swap操作的txid。code为1时�
 > * requestIndex: 之前通过reqswapargs获取的编号。
 > * lpTokenTxID: lpToken转账tx的id。
 > * lpTokenOutputIndex: lpToken转账tx的outputIndex。
+> * minerFeeTxID: 矿工费转账tx的id。
+> * minerFeeTxOutputIndex: 矿工费转账tx的outputIndex。
 
 ### Response
 ```
@@ -238,12 +242,16 @@ code为0时，表示正常返回data, 其值为swap操作的txid。code为1时�
     requestIndex: "1"
     token2TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
     token2OutputIndex: 1,
+    minerFeeTxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
+    minerFeeTxOutputIndex: 0,
 }
 ```
 > * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * requestIndex: 之前通过reqswapargs获取的编号。
 > * token2TxID: token2转账tx的id。
 > * token2OutputIndex: token2转账tx的outputIndex。
+> * minerFeeTxID: 矿工费转账tx的id。
+> * minerFeeTxOutputIndex: 矿工费转账tx的outputIndex。
 
 ### Response
 ```
