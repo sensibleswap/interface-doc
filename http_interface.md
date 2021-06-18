@@ -27,7 +27,7 @@
                 "decimal": 8
             },
             "lptoken":{
-                "symbol":"tbsv-tsdk",
+                "symbol":"bsv-sspt",
                 "tokenID":"3aacf8a31dfe2f96a4d5d5e12073db6650a9213c04441ec8bebb49d67b367cf800000000",
                 "genesisHash":"02d3ca4f58e216a96a71d43f5af897694ad5fe26",
                 "codeHash":"4d4e59d05d38948e12d8015cac9055ba3e41a5bd",
