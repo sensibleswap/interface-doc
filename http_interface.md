@@ -17,28 +17,31 @@
                 "tokenID":"",
                 "genesisHash":"",
                 "codeHash":"",
-                "decimal": 8
+                "decimal": 8,
+                "rabinApis":[]
             },
             "token2": {
                 "symbol":"sspt",
                 "tokenID":"2b5c37d535cc7f822022b2bc8ce502c480563de08ec7e7130777cab55337be2100000000",
                 "genesisHash":"5de90b9c12d2975a79b67a5f7a2b037f1aad16b0",
                 "codeHash":"c9c23794ad9a1899e96482780065c74cf78c3060",
-                "decimal": 8
+                "decimal": 8,
+                "rabinApis":["https://s1.satoplay.com","https://satotx.showpay.top","https://satotx.volt.id","https://satotx.metasv.com","https://satotx.tswap.io"]
             },
             "lptoken":{
                 "symbol":"bsv-sspt",
                 "tokenID":"3aacf8a31dfe2f96a4d5d5e12073db6650a9213c04441ec8bebb49d67b367cf800000000",
                 "genesisHash":"02d3ca4f58e216a96a71d43f5af897694ad5fe26",
                 "codeHash":"4d4e59d05d38948e12d8015cac9055ba3e41a5bd",
-                "decimal":8
-            }
+                "decimal":8,
+                "rabinApis":["https://s1.satoplay.com","https://satotx.showpay.top","https://satotx.volt.id","https://satotx.metasv.com","https://satotx.tswap.io"]
+            },
         }
     }
 }
 ```
 
-code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。lptoken是在添加流动性时获得的token。在提取流动性时需要将此流动性token返回。
+code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。lptoken是在添加流动性时获得的token。在提取流动性时需要将此流动性token返回。rabinApis是签名请求的api地址
 
 ## 2. 获取swap信息
 
