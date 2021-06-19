@@ -1,5 +1,10 @@
 # swapServer接口
 
+## 接口地址
+
+- 主网: https://api.tswap.io
+- 测试网: https://api.tswap.io/test
+
 ## 1. 获取目前支持的所有swap交易对
 
 ### Request
