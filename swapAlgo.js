@@ -13,7 +13,7 @@ swapAlgo.countLpAddAmount = function(token1AddAmount, swapToken1Amount, swapToke
   let token2AddAmount = BigInt(0)
   if (swapLpTokenAmount > BigInt(0)) {
     lpMinted = token1AddAmount * swapLpTokenAmount / swapToken1Amount
-    token2AddAmount = token1AddAmount * swapToken2Amount / swapToken1Amount + BigInt(1)
+    token2AddAmount = token1AddAmount * swapToken2Amount / swapToken1Amount
   } else {
     lpMinted = token1AddAmount
   }
@@ -27,7 +27,7 @@ swapAlgo.countLpAddAmountWithToken2 = function(token2AddAmount, swapToken1Amount
   swapToken2Amount = BigInt(swapToken2Amount)
   swapLpTokenAmount = BigInt(swapLpTokenAmount)
   let lpMinted = 0n
-  //let token1AddAmount = 0n
+  let token1AddAmount = 0n
   if (swapLpTokenAmount > 0n) {
     token1AddAmount = token2AddAmount * swapToken1Amount / swapToken2Amount
     lpMinted = token1AddAmount * swapLpTokenAmount / swapToken1Amount
