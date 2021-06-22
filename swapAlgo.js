@@ -53,8 +53,8 @@ swapAlgo.swapToken1ToToken2 = function(token1AddAmount, swapToken1Amount, swapTo
   token1AddAmount = BigInt(token1AddAmount)
   swapToken1Amount = BigInt(swapToken1Amount)
   swapToken2Amount = BigInt(swapToken2Amount)
-  const token1AddAmountWithFee = token1AddAmount * BigInt(swapAlgo.FEE_FACTOR - swapFeeRate)
-  const token2RemoveAmount = token1AddAmountWithFee * swapToken2Amount / (swapToken1Amount * BigInt(swapAlgo.FEE_FACTOR) + token1AddAmountWithFee)
+
+  const token2RemoveAmount = token1AddAmount * BigInt(swapAlgo.FEE_FACTOR - swapFeeRate) * swapToken2Amount / ((swapToken1Amount + token1AddAmount) * BigInt(swapAlgo.FEE_FACTOR))
 
   let projFee = token1AddAmount * BigInt(projFeeRate) / BigInt(swapAlgo.FEE_FACTOR)
   if (projFee < swapAlgo.MIN_TOKEN1_FEE) {
@@ -69,9 +69,7 @@ swapAlgo.swapToken1ToToken2ByToken2 = function(token2RemoveAmount, swapToken1Amo
   swapToken1Amount = BigInt(swapToken1Amount)
   swapToken2Amount = BigInt(swapToken2Amount)
 
-  const token1AddAmountWithFee = token2RemoveAmount * swapToken1Amount * BigInt(swapAlgo.FEE_FACTOR) / (swapToken2Amount - token2RemoveAmount)
-
-  const token1AddAmount = token1AddAmountWithFee / BigInt(swapAlgo.FEE_FACTOR - swapFeeRate)
+  const token1AddAmount = token2RemoveAmount * BigInt(swapAlgo.FEE_FACTOR) * swapToken1Amount / BigInt(swapAlgo.FEE_FACTOR - swapFeeRate) * swapToken2Amount - token2RemoveAmount * BigInt(swapAlgo.FEE_FACTOR)
 
   let projFee = token1AddAmount * BigInt(projFeeRate) / BigInt(swapAlgo.FEE_FACTOR)
   if (projFee < swapAlgo.MIN_TOKEN1_FEE) {
@@ -85,9 +83,8 @@ swapAlgo.swapToken2ToToken1 = function(token2AddAmount, swapToken1Amount, swapTo
   token2AddAmount = BigInt(token2AddAmount)
   swapToken1Amount = BigInt(swapToken1Amount)
   swapToken2Amount = BigInt(swapToken2Amount)
-  const token2AddAmountWithFee = BigInt(token2AddAmount) * BigInt(swapAlgo.FEE_FACTOR - swapFeeRate)
-  const token1RemoveAmount = token2AddAmountWithFee * swapToken1Amount / (swapToken2Amount * BigInt(swapAlgo.FEE_FACTOR) + token2AddAmountWithFee)
-  let projFee = token2AddAmount * swapToken1Amount * BigInt(projFeeRate) / (swapToken2Amount * BigInt(swapAlgo.FEE_FACTOR) + token2AddAmountWithFee)
+  const token1RemoveAmount = token2AddAmount * BigInt(swapAlgo.FEE_FACTOR - swapFeeRate) * swapToken1Amount / ((swapToken2Amount + token2AddAmount) * BigInt(swapAlgo.FEE_FACTOR))
+  let projFee = token2AddAmount * swapToken1Amount * BigInt(projFeeRate) / ((swapToken2Amount + token2AddAmount) * BigInt(swapAlgo.FEE_FACTOR))
   if (projFee < swapAlgo.MIN_TOKEN1_FEE) {
     projFee = 0n
   }
@@ -100,10 +97,9 @@ swapAlgo.swapToken2ToToken1ByToken1 = function(token1RemoveAmount, swapToken1Amo
   swapToken1Amount = BigInt(swapToken1Amount)
   swapToken2Amount = BigInt(swapToken2Amount)
 
-  const token1AddAmountWithFee = token1RemoveAmount * swapToken2Amount * BigInt(swapAlgo.FEE_FACTOR) / (swapToken1Amount - token1RemoveAmount)
-  const token2AddAmount =  token1AddAmountWithFee / BigInt(swapAlgo.FEE_FACTOR - swapFeeRate)
+  const token2AddAmount = token1RemoveAmount * BigInt(swapAlgo.FEE_FACTOR) * swapToken2Amount / (BigInt(swapAlgo.FEE_FACTOR - swapFeeRate) * swapToken1Amount - token1RemoveAmount * BigInt(swapAlgo.FEE_FACTOR))
 
-  let projFee = token2AddAmount * swapToken1Amount * BigInt(projFeeRate) / (swapToken2Amount * BigInt(swapAlgo.FEE_FACTOR) + token2AddAmountWithFee)
+  let projFee = token2AddAmount * swapToken1Amount * BigInt(projFeeRate) / ((swapToken2Amount + token2AddAmount) * BigInt(swapAlgo.FEE_FACTOR))
   if (projFee < swapAlgo.MIN_TOKEN1_FEE) {
     projFee = 0n
   }
