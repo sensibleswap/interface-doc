@@ -78,7 +78,7 @@ swapAlgo.swapToken1ToToken2ByToken2 = function(token2RemoveAmount, swapToken1Amo
   return [token1AddAmount, projFee]
 }
 
-// 交换token2到token1时可获取的token2数量
+// 交换token2到token1时可获取的token1数量
 swapAlgo.swapToken2ToToken1 = function(token2AddAmount, swapToken1Amount, swapToken2Amount, swapFeeRate, projFeeRate) {
   token2AddAmount = BigInt(token2AddAmount)
   swapToken1Amount = BigInt(swapToken1Amount)
