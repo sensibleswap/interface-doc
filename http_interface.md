@@ -165,7 +165,7 @@ data格式如下：
 > * token2OutputIndex: token转账tx的outputIndex。
 > * token1AddAmount: 往swap池中添加的token1的数量, 类型为BigInt.toString()
 
-注意：这里转账的bsv数量为txFee + token1AddAmount
+注意：这里转账的bsv数量为txFee + token1AddAmount, token1为bsv时， token1AddAmount不能小于1000 satoshi.
 
 ### Response
 ```
