@@ -1,7 +1,7 @@
 let swapAlgo = module.exports
 
 swapAlgo.FEE_FACTOR = 10000
-swapAlgo.MIN_TOKEN1_FEE = 600n
+swapAlgo.MIN_TOKEN1_FEE = 500n
 
 // 增加流动性时使用token1计算token2以及lp token的增加数量
 swapAlgo.countLpAddAmount = function(token1AddAmount, swapToken1Amount, swapToken2Amount, swapLpTokenAmount) {

@@ -124,7 +124,7 @@ data格式如下：
     },
 }
 ```
-code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。
+code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。**注意每次进行swap操作是都需要申请新的requestIndex，requestIndex不能重复使用。**
 
 data格式如下：
 
@@ -165,7 +165,7 @@ data格式如下：
 > * token2OutputIndex: token转账tx的outputIndex。
 > * token1AddAmount: 往swap池中添加的token1的数量, 类型为BigInt.toString()
 
-注意：这里转账的bsv数量为txFee + token1AddAmount, token1为bsv时， token1AddAmount不能小于1000 satoshi.
+**注意：这里转账的bsv数量为txFee + token1AddAmount, token1为bsv时， token1AddAmount不能小于1000 satoshi.**
 
 ### Response
 ```
