@@ -98,12 +98,14 @@ data格式如下：
     symbol: "bsv-ssp",
     address: "msREe5jsynP65899v1KJCydf6Sc9pJPb8S",
     op: 1,
+    source: 'tswap.io'
 }
 ```
 
 > * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * address: 操作者用于接受token和bsv的地址
 > * op: swap操作。1 增加流动性，2 提取流动性，3 使用token1换取token2，4 使用token2换取token1
+> * source: 标记调用者的身份，方便查找错误
 
 ### Response
 ```
