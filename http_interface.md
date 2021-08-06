@@ -285,6 +285,7 @@ code为0时，表示正常返回data, 其值为swap操作的txid。code为1时�
 
 # swap请求流程
 
-- 1. 用户发起请求: 调用```/reqswapargs```，服务器会根据用户传入的```address```，动态生成的需要转入token的合约地址```tokenToAddress```，以及随机生成bsv的转入地址```bsvToAddress```。
-- 2. 收到响应后根据返回的参数，计算要转账的token1(bsv)和token2数量，然后将token1转入返回参数```bsvToAddress```，将token2转入返回参数```tokenToAddress```
-- 3. 转账完成后，根据不同的操作，请求swap操作接口```/addliq```, ```/removeliq```, ```/token1totoken2```, ```/token2totoken1```
+- 1. 初始化调用```/swapinfo```，获取swap合约的信息
+- 2. 用户需要进行swap操作: 调用```/reqswapargs```，服务器会根据用户传入的```address```，动态生成的需要转入token的合约地址```tokenToAddress```，以及随机生成bsv的转入地址```bsvToAddress```。
+- 3. 收到响应后根据返回的参数，计算要转账的token1(bsv)和token2数量，然后将token1转入返回参数```bsvToAddress```，将token2转入返回参数```tokenToAddress```
+- 4. 转账完成后，根据不同的操作，请求swap操作接口```/addliq```, ```/removeliq```, ```/token1totoken2```, ```/token2totoken1```
