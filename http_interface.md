@@ -177,6 +177,7 @@ data格式如下：
 > * token1AddAmount: 往swap池中添加的token1的数量, 类型为BigInt.toString()
 
 **注意：这里转账的bsv数量为txFee + token1AddAmount, token1为bsv时， token1AddAmount不能小于1000 satoshi.**
+**注意2: 碰到需要同时转一笔bsv和一笔token的接口，必须先转bsv然后再转token，这样swap过程中断了才能退回来。之前有碰到过一个错误，就是转了bsv后，紧接着马上转token，由于bsv utxo更新延迟，会导致mempool conflic的问题，一个解决方法是直接本地构造一个bsv的转账tx，将找零utxo和其他的utxo一起传入到sensible-sdk（sensible-sdk转账ft支持传入utxos），这样能避免双花问题**
 
 ### Response
 ```
