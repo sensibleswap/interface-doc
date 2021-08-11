@@ -44,25 +44,6 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
 
 ## 2. 获取farm信息
 
-### Request
-- Method: **GET**
-- URL: ```/userinfo?symbol=tbsv-test&address=mzJR1zKcZCZvMJj87rVqmFFxmaVEe62BBW```
-> * symbol: farm池的符号，/allpairs接口获得。
-> * address: 用户地址。
-
-### Response
-```
-{
-	"code": 0,
-	"msg": "",
-	"data": {
-		"tokenAmount": "18000",
-		"rewardDebt": "18539999999"
-	}
-}
-```
-> * tokenAmount: 用户当前质押的token数量。
-> * rewardDebt: 用户可以获得的奖励token数量。
 
 ### Request
 - Method: **GET**
@@ -92,6 +73,26 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
 > * accPoolPerShare是累计的奖励，用于更rewardAmountFactor一起计算用户可获得的奖励token。
 
 ## 3. 获取用户信息
+
+### Request
+- Method: **GET**
+- URL: ```/userinfo?symbol=tbsv-test&address=mzJR1zKcZCZvMJj87rVqmFFxmaVEe62BBW```
+> * symbol: farm池的符号，/allpairs接口获得。
+> * address: 用户地址。
+
+### Response
+```
+{
+	"code": 0,
+	"msg": "",
+	"data": {
+		"tokenAmount": "18000",
+		"rewardDebt": "18539999999"
+	}
+}
+```
+> * tokenAmount: 用户当前质押的token数量。
+> * rewardDebt: 用户可以获得的奖励token数量。
 
 ## 4. 请求farm操作
 
