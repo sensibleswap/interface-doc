@@ -17,34 +17,34 @@
 ### Response
 ```
 {
-	"code": 0,
-	"data": {
-		"tbsv-test": {
-			"token": {
-				"rabinApis": ["https://s1.satoplay.com", "https://satotx.showpay.top", "https://satotx.volt.id", "https://satotx.metasv.com", "https://satotx.tswap.io"],
-				"symbol": "tbsv/test",
-				"tokenID": "dbd8ac021f83dc16e363520171177e7fcc401de7",
-				"genesisHash": "ac7ceab3809fb68b7dc9b40e1c6cacf6ccb68558",
-				"codeHash": "777e4dd291059c9f7a0fd563f7204576dcceb791",
-				"decimal": 8
-			},
-			"rewardToken": {
-				"rabinApis": ["https://s1.satoplay.com", "https://satotx.showpay.top", "https://satotx.volt.id", "https://satotx.metasv.com", "https://satotx.tswap.io"],
-				"symbol": "test",
-				"tokenID": "e616a7e2367f640485e8f9148a0320e4a71ab83f",
-				"genesisHash": "0a1387f738b73e844e9ea0c5b0ae7eb3cbdec575",
-				"codeHash": "777e4dd291059c9f7a0fd563f7204576dcceb791",
-				"decimal": 8
-			},
-		    "rewardAmountFactor": "100000000",
-		    "rewardAmountPerBlock": "100000000",
-		    "lastRewardBlock": "699815",
-		    "poolTokenAmount": "18000",
-		    "accPoolPerShare": "102999999999999",
+    "code": 0,
+    "data": {
+        "tbsv-test": {
+            "token": {
+                "rabinApis": ["https://s1.satoplay.com", "https://satotx.showpay.top", "https://satotx.volt.id", "https://satotx.metasv.com", "https://satotx.tswap.io"],
+                "symbol": "tbsv/test",
+                "tokenID": "dbd8ac021f83dc16e363520171177e7fcc401de7",
+                "genesisHash": "ac7ceab3809fb68b7dc9b40e1c6cacf6ccb68558",
+                "codeHash": "777e4dd291059c9f7a0fd563f7204576dcceb791",
+                "decimal": 8
+            },
+            "rewardToken": {
+                "rabinApis": ["https://s1.satoplay.com", "https://satotx.showpay.top", "https://satotx.volt.id", "https://satotx.metasv.com", "https://satotx.tswap.io"],
+                "symbol": "test",
+                "tokenID": "e616a7e2367f640485e8f9148a0320e4a71ab83f",
+                "genesisHash": "0a1387f738b73e844e9ea0c5b0ae7eb3cbdec575",
+                "codeHash": "777e4dd291059c9f7a0fd563f7204576dcceb791",
+                "decimal": 8
+            },
+            "rewardAmountFactor": "100000000",
+            "rewardAmountPerBlock": "100000000",
+            "lastRewardBlock": "699815",
+            "poolTokenAmount": "18000",
+            "accPoolPerShare": "102999999999999",
             "addressCount": 100, 
             "lockedTokenAmount": "10000",
             "rewardTokenAmount": "10000"
-	}
+    }
 }
 ```
 
@@ -72,16 +72,16 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
 ### Response
 ```
 {
-	"code": 0,
-	"msg": "",
-	"data": {
-		"rewardAmountFactor": "100000000",
-		"rewardAmountPerBlock": "100000000",
-		"lastRewardBlock": "699815",
-		"poolTokenAmount": "18000",
-		"accPoolPerShare": "102999999999999",
+    "code": 0,
+    "msg": "",
+    "data": {
+        "rewardAmountFactor": "100000000",
+        "rewardAmountPerBlock": "100000000",
+        "lastRewardBlock": "699815",
+        "poolTokenAmount": "18000",
+        "accPoolPerShare": "102999999999999",
         "addressCount": 100 
-	}
+    }
 }
 ```
 
@@ -103,12 +103,12 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
 ### Response
 ```
 {
-	"code": 0,
-	"msg": "",
-	"data": {
-		"tokenAmount": "18000",
-		"rewardDebt": "18539999999"
-	}
+    "code": 0,
+    "msg": "",
+    "data": {
+        "tokenAmount": "18000",
+        "rewardDebt": "18539999999"
+    }
 }
 ```
 > * tokenAmount: 用户当前质押的token数量。
@@ -141,11 +141,11 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
 ### Response
 ```
 {
-	"requestIndex": 1,
-	"tokenToAddress": "",
-	"bsvToAddress": "mnJjkrvrYZGRqvRJwQJdi4dDdmrxDtmCVi",
-	"txFee": 74930,
-	"op": 3
+    "requestIndex": 1,
+    "tokenToAddress": "",
+    "bsvToAddress": "mnJjkrvrYZGRqvRJwQJdi4dDdmrxDtmCVi",
+    "txFee": 74930,
+    "op": 3
 }
 ```
 
@@ -185,11 +185,11 @@ data格式如下：
 ### Response
 ```
 {
-	"code": 0,
-	"msg": "",
-	"data": {
-		"txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8"
-	}
+    "code": 0,
+    "msg": "",
+    "data": {
+        "txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8"
+    }
 }
 ```
 code为0时，表示正常返回data, txid为farm操作的交易id。code为1时，表示由错误。错误信息在msg中。
@@ -259,11 +259,11 @@ const sig = toHex(signTx(tx, this.privateKey, script.toASM(), Number(data.satosh
 ### Response
 ```
 {
-	"code": 0,
-	"msg": "",
-	"data": {
-		"txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8"
-	}
+    "code": 0,
+    "msg": "",
+    "data": {
+        "txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8"
+    }
 }
 ```
 code为0时，表示正常返回data, txid为farm操作的交易id。code为1时，表示由错误。错误信息在msg中。
@@ -325,11 +325,11 @@ code为0时，表示正常返回data, txid为farm操作的交易id。code为1时
 ### Response
 ```
 {
-	"code": 0,
-	"msg": "",
-	"data": {
-		"txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8"
-	}
+    "code": 0,
+    "msg": "",
+    "data": {
+        "txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8"
+    }
 }
 ```
 code为0时，表示正常返回data, txid为farm操作的交易id。code为1时，表示由错误。错误信息在msg中。
