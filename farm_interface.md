@@ -217,6 +217,8 @@ const sig = toHex(signTx(tx, this.privateKey, script.toASM(), Number(data.satosh
 
 在计算出pubKey和sig之后，继续调用withdraw2接口
 
+**注意：由于此接口返回的txHex和scriptHex较大，强烈建议请求的header里面加上{Accept-Encoding: gzip}**
+
 ### Request
 - Methos: **POST**
 - URL: ```/withdraw2```
@@ -280,6 +282,8 @@ code为0时，表示正常返回data, txid为farm操作的交易id。code为1时
 获取到harvest接口的返回参数后，需要使用之前reqfarmargs传入的address对应的私钥对tx进行签名。签名代码参考withdraw。
 
 在计算出pubKey和sig之后，继续调用harvest2接口
+
+**注意：由于此接口返回的txHex和scriptHex较大，强烈建议请求的header里面加上{Accept-Encoding: gzip}**
 
 ### Request
 - Methos: **POST**
