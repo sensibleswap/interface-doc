@@ -11,7 +11,8 @@
 
 ### Request
 - Method: **GET**
-- URL: ```/allpairs```
+- URL: ```/allpairs?address=mzJR1zKcZCZvMJj87rVqmFFxmaVEe62BBW```
+> * address: 用户地址。
 
 ### Response
 ```
@@ -34,13 +35,30 @@
 				"genesisHash": "0a1387f738b73e844e9ea0c5b0ae7eb3cbdec575",
 				"codeHash": "777e4dd291059c9f7a0fd563f7204576dcceb791",
 				"decimal": 8
-			}
-		}
+			},
+		    "rewardAmountFactor": "100000000",
+		    "rewardAmountPerBlock": "100000000",
+		    "lastRewardBlock": "699815",
+		    "poolTokenAmount": "18000",
+		    "accPoolPerShare": "102999999999999",
+            "addressCount": 100, 
+            "lockedTokenAmount": "10000",
+            "rewardTokenAmount": "10000"
 	}
 }
 ```
 
-code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。token是需要进行质押的token信息。rewardToken是质押token后获得的奖励token信息。
+code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。
+> * token: 需要进行质押的token信息。
+> * rewardToken: 质押token后获得的奖励token信息。
+> * rewardAmountFactor: 用于计算用户的奖励。
+> * rewardAmountPerBlock是当前farm池每个区块所产生的奖励token数量。
+> * lastRewardBlock: 上次更新操作时的block高度。
+> * poolTokenAmount: 当前farm池质押的token数量。
+> * accPoolPerShare: 累计的奖励，用于跟rewardAmountFactor一起计算用户可获得的奖励token。
+> * addressCount: 参与质押的地址总数。
+> * lockedTokenAmount: 请求地址的质押token数量。
+> * rewardTokenAmount: 请求地址可以获得的奖励token数量。
 
 ## 2. 获取farm信息
 
@@ -61,16 +79,18 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
 		"rewardAmountPerBlock": "100000000",
 		"lastRewardBlock": "699815",
 		"poolTokenAmount": "18000",
-		"accPoolPerShare": "102999999999999"
+		"accPoolPerShare": "102999999999999",
+        "addressCount": 100 
 	}
 }
 ```
 
 > * rewardAmountFactor: 用于计算用户的奖励。
 > * rewardAmountPerBlock是当前farm池每个区块所产生的奖励token数量。
-> * lastRewardBlock是上次更新操作时的block高度。
-> * poolTokenAmount是当前farm池质押的token数量。
-> * accPoolPerShare是累计的奖励，用于更rewardAmountFactor一起计算用户可获得的奖励token。
+> * lastRewardBlock: 上次更新操作时的block高度。
+> * poolTokenAmount: 当前farm池质押的token数量。
+> * accPoolPerShare: 累计的奖励，用于跟rewardAmountFactor一起计算用户可获得的奖励token。
+> * addressCount: 参与质押的地址总数。
 
 ## 3. 获取用户信息
 
