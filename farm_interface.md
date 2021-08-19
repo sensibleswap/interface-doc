@@ -233,11 +233,17 @@ code为0时，表示正常返回data, txid为farm操作的交易id。code为1时
     symbol: "tbsv-test",
     requestIndex: "1",
     tokenRemoveAmount: "1000",
+    bsvRawTx: "",
+    bsvOutputIndex: 0,
 }
 ```
 > * symbol: farm池的符号。
 > * requestIndex: 之前通过reqfarmargs获取的编号。
 > * tokenRemoveAmount: 需要提取的token数量，BitInt.toString()。
+> * bsvRawTx: bsv转账raw tx。
+> * bsvOutputIndex: bsv转账tx的outputIndex。
+
+**注意：bsvRawTx不要广播到bsv网络**
 
 ### Response
 ```
@@ -306,10 +312,16 @@ code为0时，表示正常返回data, txid为farm操作的交易id。code为1时
 {
     symbol: "tbsv-test",
     requestIndex: "1",
+    bsvRawTx: "",
+    bsvOutputIndex: 0,
 }
 ```
 > * symbol: farm池的符号。
 > * requestIndex: 之前通过reqfarmargs获取的编号。
+> * bsvRawTx: bsv转账raw tx。
+> * bsvOutputIndex: bsv转账tx的outputIndex。
+
+**注意：bsvRawTx不要广播到bsv网络**
 
 ### Response
 ```
