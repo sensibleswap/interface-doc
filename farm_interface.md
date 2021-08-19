@@ -186,7 +186,7 @@ data格式如下：
 > * bsvOutputIndex: bsv转账tx的outputIndex。
 > * amountCheckRawTx: token转账生成的amountCheck raw tx。
 
-**注意：在发送前必须对body进行gzip压缩**
+**注意：在发送前必须对body进行gzip压缩, 参考下面的代码**
 ```
 import { gzip } from 'node-gzip';
 const request = require('superagent')
