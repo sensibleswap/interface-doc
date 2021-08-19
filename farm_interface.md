@@ -171,16 +171,42 @@ data格式如下：
 {
     symbol: "tbsv-test",
     requestIndex: "1",
-    tokenTxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
-    tokenOutputIndex: 1,
+    tokenRawTx: "",
+    tokenOutputIndex: 0,
+    bsvRawTx: "",
+    bsvOutputIndex: 0,
+    amountCheckRawTx: "",
 }
 ```
 > * symbol: farm池的符号。
 > * requestIndex: 之前通过reqswapargs获取的编号。
-> * tokenTxID: token转账tx的id。
+> * tokenRawTx: token转账raw tx。
 > * tokenOutputIndex: token转账tx的outputIndex。
+> * bsvRawTx: bsv转账raw tx。
+> * bsvOutputIndex: bsv转账tx的outputIndex。
+> * amountCheckRawTx: token转账生成的amountCheck raw tx。
 
-**注意: 碰到需要同时转一笔bsv和一笔token的接口，必须先转bsv然后再转token，这样farm过程中断了才能退回来。之前有碰到过一个错误，就是转了bsv后，紧接着马上转token，由于bsv utxo更新延迟，会导致mempool conflic的问题，一个解决方法是直接本地构造一个bsv的转账tx，将找零utxo和其他的utxo一起传入到sensible-sdk（sensible-sdk转账ft支持传入utxos），这样能避免双花问题**
+**注意：在发送前必须对body进行gzip压缩**
+```
+import { gzip } from 'node-gzip';
+const request = require('superagent')
+const reqData = {
+    symbol,
+    requestIndex: Number(data.requestIndex),
+    tokenRawTx,
+    tokenOutputIndex,
+    bsvRawTx,
+    bsvOutputIndex: 0,
+    amountCheckRawTx,
+}
+const compressData = await gzip(JSON.stringify(reqData))
+
+reqRes = await request.post(
+    `${url}/deposit`
+).send(compressData).set('Content-Type', 'application/json')
+```
+
+**注意: 构造tx时，需要避免双花问题。一个解决方法是直接本地构造一个bsv的转账tx，将找零utxo和其他的utxo一起传入到sensible-sdk（sensible-sdk转账ft支持传入utxos），这样能避免双花问题。构造代码可以参考[buildBsvAndTokenTx函数](https://github.com/sensibleswap/bsv-web-wallet/blob/master/src/App.js#:~:text=const-,buildBsvAndTokenTx,-%3D%20async%20()%20%3D%3E%20%7B)。**
 
 ### Response
 ```
