@@ -186,7 +186,7 @@ data格式如下：
 > * bsvOutputIndex: bsv转账tx的outputIndex。
 > * amountCheckRawTx: token转账生成的amountCheck raw tx。
 
-**注意：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对body进行gzip压缩, 参考下面的代码**
+**注意：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对body进行gzip压缩, 然后设置header {'Content-Type': 'application/json'} 参考下面的代码**
 ```
 import { gzip } from 'node-gzip';
 const request = require('superagent')
@@ -200,7 +200,6 @@ const reqData = {
     amountCheckRawTx,
 }
 const compressData = await gzip(JSON.stringify(reqData))
-
 reqRes = await request.post(
     `${url}/deposit`
 ).send(compressData).set('Content-Type', 'application/json')
@@ -243,7 +242,7 @@ code为0时，表示正常返回data, txid为farm操作的交易id。code为1时
 > * bsvRawTx: bsv转账raw tx。
 > * bsvOutputIndex: bsv转账tx的outputIndex。
 
-**注意：bsvRawTx不要广播到bsv网络**
+**注意：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对body进行gzip压缩, 设置header，参考deposit**
 
 ### Response
 ```
@@ -321,7 +320,7 @@ code为0时，表示正常返回data, txid为farm操作的交易id。code为1时
 > * bsvRawTx: bsv转账raw tx。
 > * bsvOutputIndex: bsv转账tx的outputIndex。
 
-**注意：bsvRawTx不要广播到bsv网络**
+**注意：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对body进行gzip压缩, 设置header，参考deposit**
 
 ### Response
 ```
