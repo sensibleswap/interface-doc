@@ -161,7 +161,7 @@ data格式如下：
 
 ## 5. 质押
 
-把token只要到farm池中
+把token质押到farm池中
 
 ### Resuest
 - Methos: **POST**
