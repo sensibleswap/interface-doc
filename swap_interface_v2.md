@@ -1,9 +1,9 @@
-# swapServer接口(此接口未来可能废弃，请使用v2接口)
+# swapServer V2接口
 
 ## 接口地址
 
-- 主网: https://api.tswap.io
-- 测试网: https://api.tswap.io/test
+- 主网: https://api.tswap.io/v2
+- 测试网: https://api.tswap.io/v2/test
 
 ## swap请求流程
 
@@ -159,24 +159,51 @@ data格式如下：
 {
     symbol: "ssp-bsv",
     requestIndex: "1",
-    token1TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
-    token1OutputIndex: 1,
-    token2TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
-    token2OutputIndex: 1,
     token1AddAmount: "100000",
+    token2RawTx: "",
+    token2OutputIndex: 0,
+    bsvRawTx: "",
+    bsvOutputIndex: 0,
+    amountCheckRawTx: "",
 }
 ```
 
 > * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * requestIndex: 之前通过reqswapargs获取的编号。
-> * token1TxID: bsv转账tx的id。
-> * token1OutputIndex: bsv转账tx的outputIndex。
-> * token2TxID: token转账tx的id。
-> * token2OutputIndex: token转账tx的outputIndex。
 > * token1AddAmount: 往swap池中添加的token1的数量, 类型为BigInt.toString()
+> * token2RawTx: token2转账raw tx。
+> * token2OutputIndex: token2转账tx的outputIndex。
+> * bsvRawTx: bsv转账raw tx。
+> * bsvOutputIndex: bsv转账tx的outputIndex。
+> * amountCheckRawTx: token2转账生成的amountCheck raw tx。
 
 **注意：这里转账的bsv数量为txFee + token1AddAmount, token1为bsv时， token1AddAmount不能小于1000 satoshi.**
-**注意2: 碰到需要同时转一笔bsv和一笔token的接口，必须先转bsv然后再转token，这样swap过程中断了才能退回来。之前有碰到过一个错误，就是转了bsv后，紧接着马上转token，由于bsv utxo更新延迟，会导致mempool conflic的问题，一个解决方法是直接本地构造一个bsv的转账tx，将找零utxo和其他的utxo一起传入到sensible-sdk（sensible-sdk转账ft支持传入utxos），这样能避免双花问题**
+**注意2：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对body进行gzip压缩, 然后设置header {'Content-Type': 'application/json'} 参考下面的代码**
+```
+import { gzip } from 'node-gzip';
+const request = require('superagent')
+const reqData = {
+    symbol,
+    requestIndex: Number(data.requestIndex),
+    token1AddAmount,
+    tokenRawTx,
+    tokenOutputIndex,
+    bsvRawTx,
+    bsvOutputIndex: 0,
+    amountCheckRawTx,
+}
+const compressData = await gzip(JSON.stringify(reqData))
+reqRes = await request.post(
+    `${url}/addliq`
+).send(compressData).set('Content-Type', 'application/json')
+```
+**注意3: 构造tx时，需要避免双花问题。一个解决方法是直接本地构造一个bsv的转账tx，将找零utxo和其他的utxo一起传入到sensible-sdk（sensible-sdk转账ft支持传入utxos），这样能避免双花问题。构造代码可以参考[buildBsvAndTokenTx函数](https://github.com/sensibleswap/bsv-web-wallet/blob/master/src/App.js#:~:text=const-,buildBsvAndTokenTx,-%3D%20async%20()%20%3D%3E%20%7B)。**
+
+可行的交易构造方法：
+> * 1 钱包一开始获取txFee + 50000sats数量的utxo（一般的token转账耗费大概20000sats的矿工费）。
+> * 2 构造bsv的转账交易
+> * 3 使用bsv转账的找零传入sensible-sdk，构造token的转账交易。
+> * 4 如果手续费不够失败，重新执行步骤1，获取txFee + 50000 * 2 sats的utxo，继续执行2，3，如此反复，直到成功。
 
 ### Response
 ```
@@ -201,19 +228,24 @@ code为0时，表示正常返回data, txid表示swap的交易id，lpAddAmount是
 {
     symbol: "bsv-ssp",
     requestIndex: "1",
-    lpTokenTxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
-    lpTokenOutputIndex: 1,
-    minerFeeTxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
-    minerFeeTxOutputIndex: 0,
+    lpTokenRawTx,
+    lpTokenOutputIndex,
+    bsvRawTx,
+    bsvOutputIndex: 0,
+    amountCheckRawTx,
 }
 ```
 
 > * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * requestIndex: 之前通过reqswapargs获取的编号。
-> * lpTokenTxID: lpToken转账tx的id。
-> * lpTokenOutputIndex: lpToken转账tx的outputIndex。
-> * minerFeeTxID: 矿工费转账tx的id。
-> * minerFeeTxOutputIndex: 矿工费转账tx的outputIndex。
+> * lpTokenRawTx: lp token转账raw tx。
+> * lpTokenOutputIndex: lp token转账tx的outputIndex。
+> * bsvRawTx: bsv转账raw tx。
+> * bsvOutputIndex: bsv转账tx的outputIndex。
+> * amountCheckRawTx: token2转账生成的amountCheck raw tx。
+
+**注意：这里转账的bsv数量为txFee**
+**注意2：rawTx不要广播到bsv网络上，直接发给api。同时，在发送前必须对body进行gzip压缩, 设置header，参考addliq**
 
 ### Response
 ```
@@ -241,28 +273,32 @@ code为0时，表示正常返回data, 其中txid为swap交易id，token1Amount�
 {
     symbol: "bsv-ssp",
     requestIndex: "1"
-    token1TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
-    token1OutputIndex: 1,
     token1AddAmount: "100000",
+    bsvRawTx,
+    bsvOutputIndex: 0,
 }
 ```
 > * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * requestIndex: 之前通过reqswapargs获取的编号。
-> * token1TxID: bsv转账tx的id。
-> * token1OutputIndex: bsv转账tx的outputIndex。
 > * token1AddAmount: 需要交换的token1(bsv)的数量, 类型为BigInt.toString()
+> * bsvRawTx: bsv转账raw tx。
+> * bsvOutputIndex: bsv转账tx的outputIndex。
 
-注意：这里转账的bsv数量为txFee + token1AddAmount
+**注意：这里转账的bsv数量为txFee + token1AddAmount**
+**注意2：rawTx不要广播到bsv网络上，直接发给api。同时，在发送前必须对body进行gzip压缩, 设置header，参考addliq**
 
 ### Response
 ```
 {
     "code": 0,
     "msg": "",
-    "data": "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3"
+    "data": {
+        txid: '88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8',
+        token2Amount: '715070265'
+    }
 }
 ```
-code为0时，表示正常返回data, 其值为swap操作的txid。code为1时，表示由错误。错误信息在msg中。
+code为0时，表示正常返回data, 其中txid为swap交易id，token2Amount为用户获得的token数量。code为1时，表示由错误。错误信息在msg中。
 
 ## 7. 交换token2到token1
 
@@ -276,25 +312,34 @@ code为0时，表示正常返回data, 其值为swap操作的txid。code为1时�
 {
     symbol: "bsv-ssp",
     requestIndex: "1"
-    token2TxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
-    token2OutputIndex: 1,
-    minerFeeTxID: "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3",
-    minerFeeTxOutputIndex: 0,
+    token2RawTx,
+    token2OutputIndex,
+    bsvRawTx,
+    bsvOutputIndex: 0,
+    amountCheckRawTx,
 }
 ```
 > * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * requestIndex: 之前通过reqswapargs获取的编号。
-> * token2TxID: token2转账tx的id。
+> * token2RawTx: token2转账raw tx。
 > * token2OutputIndex: token2转账tx的outputIndex。
-> * minerFeeTxID: 矿工费转账tx的id。
-> * minerFeeTxOutputIndex: 矿工费转账tx的outputIndex。
+> * bsvRawTx: bsv转账raw tx。
+> * bsvOutputIndex: bsv转账tx的outputIndex。
+> * amountCheckRawTx: token2转账生成的amountCheck raw tx。
+
+**注意：这里转账的bsv数量为txFee**
+**注意2：rawTx不要广播到bsv网络上，直接发给api。同时，在发送前必须对body进行gzip压缩, 设置header，参考addliq**
 
 ### Response
 ```
 {
     "code": 0,
     "msg": "",
-    "data": "ea3ddf0825481df5b0c8cac56c2ffd5d8919397eaf169b8204d4e4ead82735b3"
+    "data": {
+        txid: '88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8',
+        token1Amount: '715070265'
+    }
 }
 ```
-code为0时，表示正常返回data, 其值为swap操作的txid。code为1时，表示由错误。错误信息在msg中。
+
+code为0时，表示正常返回data, 其中txid为swap交易id，token1Amount为用户获得的bsv数量。code为1时，表示由错误。错误信息在msg中。
