@@ -156,7 +156,6 @@ data格式如下：
 - URL: ```/addliq```
 - Body: 
 ```
-```
 {
     data: compressedData
 }
