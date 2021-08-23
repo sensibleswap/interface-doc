@@ -169,6 +169,13 @@ data格式如下：
 - Body: 
 ```
 {
+    data: compressedData
+}
+```
+
+compressData是如下格式
+```
+data = {
     symbol: "tbsv-test",
     requestIndex: "1",
     tokenRawTx: "",
@@ -177,6 +184,7 @@ data格式如下：
     bsvOutputIndex: 0,
     amountCheckRawTx: "",
 }
+compressData = gzip(JSON.stringify(data))
 ```
 > * symbol: farm池的符号。
 > * requestIndex: 之前通过reqswapargs获取的编号。
@@ -186,7 +194,7 @@ data格式如下：
 > * bsvOutputIndex: bsv转账tx的outputIndex。
 > * amountCheckRawTx: token转账生成的amountCheck raw tx。
 
-**注意：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对body进行gzip压缩, 然后设置header {'Content-Type': 'application/json'} 参考下面的代码**
+**注意：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对data进行gzip压缩, 然后设置header {'Content-Type': 'application/json'} 参考下面的代码**
 ```
 import { gzip } from 'node-gzip';
 const request = require('superagent')
@@ -248,7 +256,7 @@ code为0时，表示正常返回data, txid为farm操作的交易id。code为1时
 > * bsvRawTx: bsv转账raw tx。
 > * bsvOutputIndex: bsv转账tx的outputIndex。
 
-**注意：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对body进行gzip压缩, 设置header，参考deposit**
+**注意：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对data进行gzip压缩, 设置header，参考deposit**
 
 ### Response
 ```
@@ -274,7 +282,7 @@ const sig = toHex(signTx(tx, this.privateKey, script.toASM(), Number(data.satosh
 
 在计算出pubKey和sig之后，继续调用withdraw2接口
 
-**注意：由于此接口返回的txHex和scriptHex较大，强烈建议请求的header里面加上{Accept-Encoding: gzip}**
+**注意：由于此接口返回的txHex和scriptHex较大，请求的header里面必须加上{Accept-Encoding: gzip}**
 
 ### Request
 - Methos: **POST**
@@ -326,7 +334,7 @@ code为0时，表示正常返回data, txid为farm操作的交易id。code为1时
 > * bsvRawTx: bsv转账raw tx。
 > * bsvOutputIndex: bsv转账tx的outputIndex。
 
-**注意：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对body进行gzip压缩, 设置header，参考deposit**
+**注意：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对data进行gzip压缩, 设置header，参考deposit**
 
 ### Response
 ```
@@ -346,7 +354,7 @@ code为0时，表示正常返回data, txid为farm操作的交易id。code为1时
 
 在计算出pubKey和sig之后，继续调用harvest2接口
 
-**注意：由于此接口返回的txHex和scriptHex较大，强烈建议请求的header里面加上{Accept-Encoding: gzip}**
+**注意：由于此接口返回的txHex和scriptHex较大，请求的header里面必须加上{Accept-Encoding: gzip}**
 
 ### Request
 - Methos: **POST**

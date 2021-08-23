@@ -156,7 +156,15 @@ data格式如下：
 - URL: ```/addliq```
 - Body: 
 ```
+```
 {
+    data: compressedData
+}
+```
+
+compressData是如下格式
+```
+data = {
     symbol: "ssp-bsv",
     requestIndex: "1",
     token1AddAmount: "100000",
@@ -166,6 +174,7 @@ data格式如下：
     bsvOutputIndex: 0,
     amountCheckRawTx: "",
 }
+compressData = gzip(JSON.stringify(data))
 ```
 
 > * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
@@ -179,7 +188,7 @@ data格式如下：
 
 **注意：这里转账的bsv数量为txFee + token1AddAmount, token1为bsv时， token1AddAmount不能小于1000 satoshi.**
 
-**注意2：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对body进行gzip压缩, 然后设置header {'Content-Type': 'application/json'}。 参考下面的代码:**
+**注意2：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对data进行gzip压缩, 然后设置header {'Content-Type': 'application/json'}。 参考下面的代码:**
 ```
 import { gzip } from 'node-gzip';
 const request = require('superagent')
@@ -247,7 +256,7 @@ code为0时，表示正常返回data, txid表示swap的交易id，lpAddAmount是
 
 **注意：这里转账的bsv数量为txFee**
 
-**注意2：rawTx不要广播到bsv网络上，直接发给api。同时，在发送前必须对body进行gzip压缩, 设置header，参考addliq**
+**注意2：rawTx不要广播到bsv网络上，直接发给api。同时，在发送前必须对data进行gzip压缩, 设置header，参考addliq**
 
 ### Response
 ```
@@ -288,7 +297,7 @@ code为0时，表示正常返回data, 其中txid为swap交易id，token1Amount�
 
 **注意：这里转账的bsv数量为txFee + token1AddAmount**
 
-**注意2：rawTx不要广播到bsv网络上，直接发给api。同时，在发送前必须对body进行gzip压缩, 设置header，参考addliq**
+**注意2：rawTx不要广播到bsv网络上，直接发给api。同时，在发送前必须对data进行gzip压缩, 设置header，参考addliq**
 
 ### Response
 ```
@@ -332,7 +341,7 @@ code为0时，表示正常返回data, 其中txid为swap交易id，token2Amount�
 
 **注意：这里转账的bsv数量为txFee**
 
-**注意2：rawTx不要广播到bsv网络上，直接发给api。同时，在发送前必须对body进行gzip压缩, 设置header，参考addliq**
+**注意2：rawTx不要广播到bsv网络上，直接发给api。同时，在发送前必须对data进行gzip压缩, 设置header，参考addliq**
 
 ### Response
 ```
