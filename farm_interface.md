@@ -379,8 +379,9 @@ code为0时，表示正常返回data, txid为farm操作的交易id。code为1时
     "code": 0,
     "msg": "",
     "data": {
-        "txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8"
+        "txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8",
+        "rewardTokenAmount": "10000"
     }
 }
 ```
-code为0时，表示正常返回data, txid为farm操作的交易id。code为1时，表示由错误。错误信息在msg中。
+code为0时，表示正常返回data, txid为farm操作的交易id, rewardTokenAmount表示获得的奖励token数量。code为1时，表示由错误。错误信息在msg中。
