@@ -43,7 +43,9 @@
             "accPoolPerShare": "102999999999999",
             "addressCount": 100, 
             "lockedTokenAmount": "10000",
-            "rewardTokenAmount": "10000"
+            "rewardTokenAmount": "10000",
+            "farmCodeHash":"0d90001629d60c20fd9e95fcb99daaef12d063df",
+            "farmID":"ba2b070b68e43a2301aedde0557db91af662ad73"
     }
 }
 ```
@@ -59,6 +61,8 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
 > * addressCount: 参与质押的地址总数。
 > * lockedTokenAmount: 请求地址的质押token数量。
 > * rewardTokenAmount: 请求地址可以获得的奖励token数量。
+> * farmCodeHash: farm合约的contract code hash。
+> * farmID: farm合约的ID。
 
 ## 2. 获取farm信息
 
