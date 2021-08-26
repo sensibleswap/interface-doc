@@ -49,13 +49,23 @@
                 "decimal":8,
                 "rabinApis":["https://s1.satoplay.com","https://satotx.showpay.top","https://satotx.volt.id","https://satotx.metasv.com","https://satotx.tswap.io"]
             },
-            "rabinApis":["https://s1.satoplay.com","https://satotx.showpay.top","https://satotx.volt.id","https://satotx.metasv.com","https://satotx.tswap.io"]
+            "rabinApis":["https://s1.satoplay.com","https://satotx.showpay.top","https://satotx.volt.id","https://satotx.metasv.com","https://satotx.tswap.io"],
+            "swapCodeHash":"3af062db29f1e04faeb5e35531fad75410473e40",
+            "swapID":"f09b244a3c5cc74a49d5695a32c33af4ef572d9d"
         }
     }
 }
 ```
 
-code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。lptoken是在添加流动性时获得的token。在提取流动性时需要将此流动性token返回。rabinApis是签名请求的api地址。
+code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。
+
+data数据：
+> * token1：交易对中的token信息。
+> * token2: 交易对中的另一个token信息。
+> * lptoken是在添加流动性时获得的token。在提取流动性时需要将此流动性token返回。
+> * rabinApis是签名请求的api地址。
+> * swapCodeHash: swap合约的contract code hash。
+> * swapID: swap合约的ID，对应于sensiblequery的genesis。
 
 ## 2. 获取swap信息
 
