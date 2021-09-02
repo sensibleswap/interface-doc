@@ -293,18 +293,16 @@ code为0时，表示正常返回data, 其中txid为swap交易id，token1Amount�
 {
     symbol: "bsv-ssp",
     requestIndex: "1"
-    token1AddAmount: "100000",
     bsvRawTx,
     bsvOutputIndex: 0,
 }
 ```
 > * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * requestIndex: 之前通过reqswapargs获取的编号。
-> * token1AddAmount: 需要交换的token1(bsv)的数量, 类型为BigInt.toString()
 > * bsvRawTx: bsv转账raw tx。
 > * bsvOutputIndex: bsv转账tx的outputIndex。
 
-**注意：这里转账的bsv数量为txFee + token1AddAmount**
+**注意：这里转账的bsv数量为txFee + token1AddAmount, token1AddAmount就是用户要swap的bsv数量**
 
 **注意2：rawTx不要广播到bsv网络上，直接发给api。同时，在发送前必须对data进行gzip压缩, 设置header，参考addliq**
 
