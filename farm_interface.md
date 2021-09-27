@@ -321,7 +321,7 @@ const sig = toHex(signTx(tx, this.privateKey, script.toASM(), Number(data.satosh
 ```
 code为0时，表示正常返回data, txid为farm操作的交易id。code为1时，表示由错误。错误信息在msg中。
 
-如果code返回99999，表示交易于其他用户产生冲突，可以进行重试。将data.other进行解压后，得到新的data，格式与withdraw接口返回的data格式一样。进行重新签名后，再次调用withdraw2接口。参考代码如下:
+如果code返回99999，表示交易与其他用户产生冲突，可以进行重试。将data.other进行解压后，得到新的data，格式与withdraw接口返回的data格式一样。进行重新签名后，再次调用withdraw2接口。参考代码如下:
 
 ```
 if (response.body.code === 99999) {
@@ -419,7 +419,7 @@ if (response.body.code === 99999) {
 ```
 code为0时，表示正常返回data, txid为farm操作的交易id, rewardTokenAmount表示获得的奖励token数量。code为1时，表示由错误。错误信息在msg中。
 
-如果code返回99999，表示交易于其他用户产生冲突，可以进行重试。将data.other进行解压后，得到新的data，格式与withdraw接口返回的data格式一样。进行重新签名后，再次调用withdraw2接口。参考代码如下:
+如果code返回99999，表示交易与其他用户产生冲突，可以进行重试。将data.other进行解压后，得到新的data，格式与withdraw接口返回的data格式一样。进行重新签名后，再次调用withdraw2接口。参考代码如下:
 ```
 if (response.body.code === 99999) {
     const raw = await ungzip(Buffer.from(response.body.data.other))
