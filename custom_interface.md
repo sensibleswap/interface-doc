@@ -109,14 +109,14 @@ code为0时，表示正常返回data, swapTxId表示创建的swap交易id。code
 - Method: **GET**
 - URL: ```/pairinfo?symbol=52e6021649be1d0621c52c9f61a54ef58c6d8dbe```
 
-> * symbol: 需要交易token的tokenID(genesis)。
+> * symbol: 需要交易token的tokenID(genesis)或者token symbol。
 
 ### Response
 
 ```
 {
     "code":0,
-    "data":{
+    "data": [{
         "token1": {
             "symbol":"bsv",
             "tokenID":"",
@@ -143,11 +143,11 @@ code为0时，表示正常返回data, swapTxId表示创建的swap交易id。code
         "rabinApis":["https://s1.satoplay.com","https://satotx.showpay.top","https://satotx.volt.id","https://satotx.metasv.com","https://satotx.tswap.io"],
         "swapCodeHash":"3af062db29f1e04faeb5e35531fad75410473e40",
         "swapID":"f09b244a3c5cc74a49d5695a32c33af4ef572d9d"
-    }
+    }]
 }
 ```
 
-code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。
+code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。当symbol为tokenID时，最对返回一个交易对信息。当symbol为tokenSymbol时，可能会返回多个交易对结果。
 
 data数据：
 > * token1：交易对中的token信息。
