@@ -109,7 +109,7 @@ code为0时，表示正常返回data, swapTxId表示创建的swap交易id。code
 - Method: **GET**
 - URL: ```/pairinfo?symbol=52e6021649be1d0621c52c9f61a54ef58c6d8dbe```
 
-> * symbol: 需要交易token的tokenID(genesis)或者token symbol。
+> * symbol: 需要交易token的tokenID(genesis)或者tokenSymbol, tokenSymbol不区分大小写。
 
 ### Response
 
