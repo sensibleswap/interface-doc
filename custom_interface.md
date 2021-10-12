@@ -147,7 +147,7 @@ code为0时，表示正常返回data, swapTxId表示创建的swap交易id。code
 }
 ```
 
-code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。当symbol为tokenID时，最对返回一个交易对信息。当symbol为tokenSymbol时，可能会返回多个交易对结果。
+code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。当symbol为tokenID时，返回0个或1个交易对信息。当symbol为tokenSymbol时，可能会返回多个交易对结果。
 
 data数据：
 > * token1：交易对中的token信息。
