@@ -157,22 +157,26 @@ data数据：
 > * swapCodeHash: swap合约的contract code hash。
 > * swapID: swap合约的ID，对应于sensiblequery的genesis。
 
-## 3. 获取swap信息
+## 3. 获取目前支持的所有swap交易对
+
+同swap_interface
+
+## 4. 获取swap信息
 
 同swap_interface，symbol填tokenID。
 
-## 4. 增加流动性
+## 5. 增加流动性
 
 同swap_interface，symbol填tokenID。
 
-## 5. 提取流动性
+## 6. 提取流动性
 
 同swap_interface，symbol填tokenID。
 
-## 6. 交换token1到token2
+## 7. 交换token1到token2
 
 同swap_interface，symbol填tokenID。
 
-## 7. 交换token2到token1
+## 8. 交换token2到token1
 
 同swap_interface，symbol填tokenID。

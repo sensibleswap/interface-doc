@@ -51,7 +51,8 @@
             },
             "rabinApis":["https://s1.satoplay.com","https://satotx.showpay.top","https://satotx.volt.id","https://satotx.metasv.com","https://satotx.tswap.io"],
             "swapCodeHash":"3af062db29f1e04faeb5e35531fad75410473e40",
-            "swapID":"f09b244a3c5cc74a49d5695a32c33af4ef572d9d"
+            "swapID":"f09b244a3c5cc74a49d5695a32c33af4ef572d9d",
+            "poolAmount":"10000",
         }
     }
 }
@@ -66,6 +67,9 @@ data数据：
 > * rabinApis是签名请求的api地址。
 > * swapCodeHash: swap合约的contract code hash。
 > * swapID: swap合约的ID，对应于sensiblequery的genesis。
+> * poolAmount: token1在swap池中的数量。
+
+**注意：由于此接口请求的header里面必须加上{Accept-Encoding: gzip}**
 
 ## 2. 获取swap信息
 
