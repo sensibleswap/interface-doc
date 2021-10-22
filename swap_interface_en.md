@@ -61,8 +61,8 @@
 
 When code is 0, it means success. Otherwise it means failed and there will be a msg which describes the specific information.
 
-data format：
-> * token1：token1 info.
+data format:
+> * token1: token1 info.
 > * token2: token2 info.
 > * lptoken: lpToken info.
 > * rabinApis: rabin oracle address.
@@ -70,7 +70,7 @@ data format：
 > * swapID: a unique ID for swap contract.
 > * poolAmount: a pool amount used for sorting token pairs.
 
-**Note：The request header of this interface must include {Accept-Encoding: gzip}**
+**Note: The request header of this interface must include {Accept-Encoding: gzip}**
 
 ## 2. Get Swap Info
 
@@ -95,7 +95,7 @@ data format：
 }
 ```
 
-data format：
+data format:
 
 > * swapToken1Amount: token1 amount in swap pool, whose type is string.
 > * swapToken2Amount: token1 amount in swap pool, whose type is string.
@@ -150,7 +150,7 @@ Before doing swap operation, you need request swap args.
 
 **Note: requestIndex can't be used repeatedly. Need call ```/reqswapargs``` before every swap operation.**
 
-data format：
+data format:
 
 > * requestIndex: request id to idendify this request.
 > * tokenToAddress: tokenAddress for swap to accept token transfer.
@@ -201,7 +201,7 @@ compressData = gzip(JSON.stringify(data))
 
 **Note: If the token1 is bsv, you need transfer sum of token1AddAmount and txFee. And the minimum token1AddAmount is 1000 satoshis.**
 
-**Note2：Do not broadcast rawTx，just send to tswap api. And the data need to be compressed to compressedData with request header {'Content-Type': 'application/json'}. There is a reference code in typescript:**
+**Note2: Do not broadcast rawTx，just send to tswap api. And the data need to be compressed to compressedData with request header {'Content-Type': 'application/json'}. There is a reference code in typescript:**
 ```
 import { gzip } from 'node-gzip';
 const request = require('superagent')
@@ -276,7 +276,7 @@ data format:
 
 **Note: the bsv transfer amount should be txFee**
 
-**Note2：Donot broadcast rawTx, compress data and set header like addliq**
+**Note2: Donot broadcast rawTx, compress data and set header like addliq**
 
 ### Response
 ```
@@ -319,7 +319,7 @@ Data format:
 
 **Note: the bsv transfer amount should be the sum of txFee and bsv amount you want to swap**
 
-**Note2：Do not broadcast rawTx, compress data and set header like addliq**
+**Note2: Do not broadcast rawTx, compress data and set header like addliq**
 
 ### Response
 ```
@@ -364,7 +364,7 @@ Data format:
 
 **Note: the bsv transfer amount should be txFee**
 
-**Note2：Do not broadcast rawTx, compress data and set header like addliq**
+**Note2: Do not broadcast rawTx, compress data and set header like addliq**
 
 ### Response
 ```
