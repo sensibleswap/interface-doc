@@ -235,7 +235,8 @@ reqRes = await request.post(
     "code": 0,
     "msg": "",
     "data": {
-        "txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8"
+        "txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8",
+        "blockHeight": 70159
     }
 }
 ```
@@ -315,7 +316,8 @@ const sig = toHex(signTx(tx, this.privateKey, script.toASM(), Number(data.satosh
     "code": 0,
     "msg": "",
     "data": {
-        "txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8"
+        "txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8",
+        "blockHeight": 70159
     }
 }
 ```
@@ -413,7 +415,8 @@ if (response.body.code === 99999) {
     "msg": "",
     "data": {
         "txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8",
-        "rewardTokenAmount": "10000"
+        "rewardTokenAmount": "10000",
+        "blockHeight": 70159
     }
 }
 ```
