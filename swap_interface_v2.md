@@ -61,8 +61,8 @@
 code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。
 
 data数据：
-> * token1：交易对中的token信息。
-> * token2: 交易对中的另一个token信息。
+> * token1：交易对中token1信息。
+> * token2: 交易对中token2信息。
 > * lptoken是在添加流动性时获得的token。在提取流动性时需要将此流动性token返回。
 > * rabinApis是签名请求的api地址。
 > * swapCodeHash: swap合约的contract code hash。
@@ -98,8 +98,8 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
 
 data格式如下：
 
-> * swapToken1Amount: swap池中token1即bsv的总数量, 类型为BigInt.toString()
-> * swapToken2Amount: swap池中token2即ssp的总数量，类型为BigInt.toString()
+> * swapToken1Amount: swap池中token1的总数量, 类型为BigInt.toString()
+> * swapToken2Amount: swap池中token2的总数量，类型为BigInt.toString()
 > * swapLpAmount: swap池中lp token的总数量, 类型为BigInt.toString()
 > * swapFeeRate: swap池进行交换时的收取的总费率
 > * projFeeRate: swap池进行交换时收取的项目费率
@@ -181,11 +181,14 @@ data = {
     symbol: "ssp-bsv",
     requestIndex: "1",
     token1AddAmount: "100000",
+    amountCheck2RawTx: "",
     token2RawTx: "",
     token2OutputIndex: 0,
     bsvRawTx: "",
     bsvOutputIndex: 0,
-    amountCheckRawTx: "",
+    amountCheck1RawTx: "",
+    token1RawTx: "",
+    token1OutputIndex: 0,
 }
 compressData = gzip(JSON.stringify(data))
 ```
@@ -193,13 +196,16 @@ compressData = gzip(JSON.stringify(data))
 > * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * requestIndex: 之前通过reqswapargs获取的编号。
 > * token1AddAmount: 往swap池中添加的token1的数量, 类型为BigInt.toString()
+> * amountCheck2RawTx: token2转账生成的amountCheck raw tx。
 > * token2RawTx: token2转账raw tx。
 > * token2OutputIndex: token2转账tx的outputIndex。
 > * bsvRawTx: bsv转账raw tx。
 > * bsvOutputIndex: bsv转账tx的outputIndex。
-> * amountCheckRawTx: token2转账生成的amountCheck raw tx。
+> * amountCheck1RawTx: token1转账生成的amountCheck raw tx。如果token1为bsv则不需要传递此参数。
+> * token1RawTx: token1转账raw tx。如果token1为bsv则不需要传递此参数。
+> * token1OutputIndex: token1转账tx的outputIndex。如果token1为bsv则不需要传递此参数。
 
-**注意：这里转账的bsv数量为txFee + token1AddAmount, token1为bsv时， token1AddAmount不能小于1000 satoshi.**
+**注意：这里转账的bsv数量为txFee, 如果token1为bsv时，转账bsv数量还需要加上token1AddAmount，token1AddAmount不能小于1000.**
 
 **注意2：rawTx不要广播到bsv网络上，直接发给后端。同时，在发送前必须对data进行gzip压缩, 然后设置header {'Content-Type': 'application/json'}。 参考下面的代码:**
 ```
@@ -209,11 +215,11 @@ const reqData = {
     symbol,
     requestIndex: Number(data.requestIndex),
     token1AddAmount,
-    tokenRawTx,
-    tokenOutputIndex,
+    amountCheck2RawTx,
+    token2RawTx,
+    token2OutputIndex,
     bsvRawTx,
     bsvOutputIndex: 0,
-    amountCheckRawTx,
 }
 const compressData = await gzip(JSON.stringify(reqData))
 reqRes = await request.post(
@@ -303,14 +309,20 @@ code为0时，表示正常返回data, 其中txid为swap交易id，token1Amount�
     requestIndex: "1"
     bsvRawTx,
     bsvOutputIndex: 0,
+    amountCheckRawTx: "",
+    token1RawTx: "",
+    token1OutputIndex: 0,
 }
 ```
 > * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * requestIndex: 之前通过reqswapargs获取的编号。
 > * bsvRawTx: bsv转账raw tx。
 > * bsvOutputIndex: bsv转账tx的outputIndex。
+> * amountCheckRawTx: token1转账生成的amountCheck raw tx。如果token1为bsv则不需要传递此参数。
+> * token1RawTx: token1转账raw tx。如果token1为bsv则不需要传递此参数。
+> * token1OutputIndex: token1转账tx的outputIndex。如果token1为bsv则不需要传递此参数。
 
-**注意：这里转账的bsv数量为txFee + token1AddAmount, token1AddAmount就是用户要swap的bsv数量**
+**注意：这里转账的bsv数量为txFee, 如果token1为bsv则需要加上token1AddAmount, token1AddAmount就是用户要swap的token1数量**
 
 **注意2：rawTx不要广播到bsv网络上，直接发给api。同时，在发送前必须对data进行gzip压缩, 设置header，参考addliq**
 

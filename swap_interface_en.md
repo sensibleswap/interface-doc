@@ -181,11 +181,14 @@ data = {
     symbol: "ssp-bsv",
     requestIndex: "1",
     token1AddAmount: "100000",
+    amountCheck2RawTx: "",
     token2RawTx: "",
     token2OutputIndex: 0,
     bsvRawTx: "",
     bsvOutputIndex: 0,
-    amountCheckRawTx: "",
+    amountCheck1RawTx: "",
+    token1RawTx: "",
+    token1OutputIndex: 0,
 }
 compressData = gzip(JSON.stringify(data))
 ```
@@ -193,11 +196,14 @@ compressData = gzip(JSON.stringify(data))
 > * symbol: swap symbol.
 > * requestIndex: returned in ```/reqswapargs```.
 > * token1AddAmount: The token1 amount you want to add to pool.
+> * amountCheck2RawTx: the unlockFromContract tx used in token2 transfering.
 > * token2RawTx: The raw transaction for transfering token2 to tokenAddress.
 > * token2OutputIndex: the outputIndex of transation for token2 transfering.
 > * bsvRawTx: The raw transaction for transfering bsv to bsvAddress.
 > * bsvOutputIndex: The outputIndex of transaction for bsv transfering.
-> * amountCheckRawTx: the unlockFromContract tx used in token transfering.
+> * amountCheck1RawTx: the unlockFromContract tx used in token1 transfering. It is needed when token1 is not bsv.
+> * token1RawTx: The raw transaction for transfering token1 to tokenAddress. It is needed when token1 is not bsv.
+> * token1OutputIndex: the outputIndex of transation for token1 transfering. It is needed when token1 is not bsv.
 
 **Note: If the token1 is bsv, you need transfer sum of token1AddAmount and txFee. And the minimum token1AddAmount is 1000 satoshis.**
 
@@ -209,11 +215,11 @@ const reqData = {
     symbol,
     requestIndex: Number(data.requestIndex),
     token1AddAmount,
-    tokenRawTx,
-    tokenOutputIndex,
+    amountCheck2RawTx,
+    token2RawTx,
+    token2OutputIndex,
     bsvRawTx,
     bsvOutputIndex: 0,
-    amountCheckRawTx,
 }
 const compressData = await gzip(JSON.stringify(reqData))
 reqRes = await request.post(
@@ -309,6 +315,9 @@ Data format:
     requestIndex: "1"
     bsvRawTx,
     bsvOutputIndex: 0,
+    amountCheck1RawTx: "",
+    token1RawTx: "",
+    token1OutputIndex: 0,
 }
 ```
 
@@ -316,8 +325,11 @@ Data format:
 > * requestIndex: returned in ```/reqswapargs```.
 > * bsvRawTx: The raw transaction for transfering bsv to bsvAddress.
 > * bsvOutputIndex: The outputIndex of transaction for bsv transfering.
+> * amountCheck1RawTx: the unlockFromContract tx used in token1 transfering. It is needed when token1 is not bsv.
+> * token1RawTx: The raw transaction for transfering token1 to tokenAddress. It is needed when token1 is not bsv.
+> * token1OutputIndex: the outputIndex of transation for token1 transfering. It is needed when token1 is not bsv.
 
-**Note: the bsv transfer amount should be the sum of txFee and bsv amount you want to swap**
+**Note: when token1 is bsv, the bsv transfer amount should be the sum of txFee and bsv amount you want to swap**
 
 **Note2: Do not broadcast rawTx, compress data and set header like addliq**
 
