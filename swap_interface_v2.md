@@ -90,6 +90,7 @@ data数据：
         swapLpAmount: "100000",
         swapFeeRate: 25,
         projFeeRate: 5,
+        minProjFee: "500"
     }
 }
 ```
@@ -103,6 +104,7 @@ data格式如下：
 > * swapLpAmount: swap池中lp token的总数量, 类型为BigInt.toString()
 > * swapFeeRate: swap池进行交换时的收取的总费率
 > * projFeeRate: swap池进行交换时收取的项目费率
+> * minProjFee: swap池进行交换时收取的最低费用
 
 ## 3. 请求swap操作
 

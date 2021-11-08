@@ -91,6 +91,7 @@ data format:
         swapLpAmount: "100000",
         swapFeeRate: 25,
         projFeeRate: 5,
+        minProjFee: "500"
     }
 }
 ```
@@ -102,6 +103,7 @@ data format:
 > * swapLpAmount: lp token amount in swap pool, whose type is string.
 > * swapFeeRate: swap fee rate.
 > * projFeeRate: proj fee rate.
+> * minProjFee: the minimum fee which proj will get.
 
 ## 3. Requst swap arguments
 
