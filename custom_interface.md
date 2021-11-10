@@ -75,7 +75,8 @@ data = {
     bsvRawTx: "",
     bsvOutputIndex: 0,
     amountCheckRawTx: "",
-    tokenID: "",
+    token1ID: "",
+    token2ID: "",
 }
 compressData = gzip(JSON.stringify(data))
 ```
@@ -87,7 +88,8 @@ compressData = gzip(JSON.stringify(data))
 > * bsvRawTx: bsv转账raw tx。
 > * bsvOutputIndex: bsv转账tx的outputIndex。
 > * amountCheckRawTx: token2转账生成的amountCheck raw tx。
-> * tokenID: 想要创建交易对的tokenID(genesis)
+> * token1ID: 想要创建交易对的token1ID(即genesis，在token1不为bsv时才需要)。
+> * token2ID: 想要创建交易对的token2ID(genesis)
 
 **注意：具体交易的压缩和构造方法参考swap_interface的addliq接口**
 
