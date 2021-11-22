@@ -522,11 +522,11 @@ compressData = gzip(JSON.stringify(data))
 
 > * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
 > * requestIndex: 之前通过reqswapargs获取的编号。
-> * tokenRawTx: tsc转账raw tx。
-> * tokenOutputIndex: tsc转账tx的outputIndex。
+> * tokenRawTx: 转账reward token的raw tx，转账token的数量为rewardAmountPerBlock * 144 * rewardDays。
+> * tokenOutputIndex: 转账reward token tx的outputIndex。
 > * bsvRawTx: bsv转账raw tx。
 > * bsvOutputIndex: bsv转账tx的outputIndex。
-> * amountCheckRawTx: token2转账生成的amountCheck raw tx。
+> * amountCheckRawTx: reward token转账生成的amountCheck raw tx。
 > * tokenID: 想要质押的tokenID(genesis)。
 > * rewardTokenID: 质押得到的奖励tokenID(genesis)。
 > * rewardAmountPerBlock: 每个区块的奖励token数量。
