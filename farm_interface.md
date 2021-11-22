@@ -445,3 +445,103 @@ if (response.body.code === 99999) {
     throw Error('failed')
 }
 ```
+
+## 8. 请求创建farm参数
+
+在创建farm前的时候先去请求最新的数据。
+
+### Request
+
+- Method: **POST**
+
+- URL: ```/reqcreatefarm```
+
+- Body:
+```
+{
+    address: "msREe5jsynP65899v1KJCydf6Sc9pJPb8S",
+    source: 'tswap.io'
+}
+```
+
+> * address: 操作者用于接受token和bsv的地址
+> * source: 标记调用者的身份，方便查找错误
+
+### Response
+```
+{
+    code: 0,
+    msg: "",
+    data: {
+      requestIndex: 1,
+      tokenToAddress: 'mpuHJBBbxknPXGNtVYLDJ1PNBEDXihUqCm',
+      bsvToAddress: 'mpuHJBBbxknPXGNtVYLDJ1PNBEDXihUqCm',
+      txFee: 50000,
+      op: 1
+    }
+}
+```
+code为0时，表示正常返回data。code为1时，表示由错误。错误信息在msg中。**注意每次操作是都需要申请新的requestIndex，requestIndex不能重复使用。**
+
+data格式如下：
+
+> * requestIndex: 请求编号
+> * tokenToAddress: 需要转入token到swap池中的地址
+> * bsvToAddress: 需要转入的矿工费以及bsv到如下地址
+> * txFee: 此操作需要到矿工费
+> * op: swap操作类型
+
+## 9. 创建farm交易对
+
+### Request
+- Methos: **POST**
+- URL: ```/createfarm```
+- Body: 
+```
+{
+    data: compressedData
+}
+```
+
+compressData是如下格式
+```
+data = {
+    requestIndex: "1",
+    tokenRawTx: "",
+    tokenOutputIndex: 0,
+    bsvRawTx: "",
+    bsvOutputIndex: 0,
+    amountCheckRawTx: "",
+    tokenID: "",
+    rewardTokenID: "",
+    rewardAmountPerBlock: "10000",
+    rewardDays: 100
+}
+compressData = gzip(JSON.stringify(data))
+```
+
+> * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
+> * requestIndex: 之前通过reqswapargs获取的编号。
+> * tokenRawTx: tsc转账raw tx。
+> * tokenOutputIndex: tsc转账tx的outputIndex。
+> * bsvRawTx: bsv转账raw tx。
+> * bsvOutputIndex: bsv转账tx的outputIndex。
+> * amountCheckRawTx: token2转账生成的amountCheck raw tx。
+> * tokenID: 想要质押的tokenID(genesis)。
+> * rewardTokenID: 质押得到的奖励tokenID(genesis)。
+> * rewardAmountPerBlock: 每个区块的奖励token数量。
+> * rewardDays: 奖励持续的天数。
+
+**注意：具体交易的压缩和构造方法参考swap_interface的addliq接口**
+
+### Response
+```
+{
+    "code": 0,
+    "msg": "",
+    "data": {
+        farmTxId: '1649c55319187fc7047f0bb372e89b5d2e2c716ce7e387470e3c0460d19065a6',
+    }
+}
+```
+code为0时，表示正常返回data, farmTxId表示创建的farm交易id。code为1时，表示由错误。错误信息在msg中。
