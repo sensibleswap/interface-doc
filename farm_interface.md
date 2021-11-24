@@ -485,11 +485,11 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
 
 data格式如下：
 
-> * requestIndex: 请求编号
-> * tokenToAddress: 需要转入token到swap池中的地址
-> * bsvToAddress: 需要转入的矿工费以及bsv到如下地址
-> * txFee: 此操作需要到矿工费
-> * op: swap操作类型
+> * requestIndex: 请求编号。
+> * tokenToAddress: 需要转入token到farm池中的地址。
+> * bsvToAddress: 需要转入的手续费以及bsv到如下地址。
+> * txFee: 此操作需要到手续费。
+> * op: swap操作类型。
 
 ## 9. 创建farm交易对
 
@@ -520,8 +520,8 @@ data = {
 compressData = gzip(JSON.stringify(data))
 ```
 
-> * symbol: swap池的符号，由swap池中两个代币符号链接而成，token1-token2。
-> * requestIndex: 之前通过reqswapargs获取的编号。
+> * symbol: farm池的符号。
+> * requestIndex: 之前通过reqfarmargs获取的编号。
 > * tokenRawTx: 转账reward token的raw tx，转账token的数量为rewardAmountPerBlock * 144 * rewardDays。
 > * tokenOutputIndex: 转账reward token tx的outputIndex。
 > * bsvRawTx: bsv转账raw tx。
