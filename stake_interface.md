@@ -114,14 +114,14 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
     "code": 0,
     "msg": "",
     "data": {
-        "tokenAmount": "18000",
-        "rewardDebt": "18539999999",
+        "lockedTokenAmount": "18000",
+        "rewardTokenAmount": "18539999999",
         "unlockingTokens": [{"expired":737212,"amount":"100000"}]
     }
 }
 ```
-> * tokenAmount: 用户当前质押的token数量。
-> * rewardDebt: 用户可以获得的奖励token数量。
+> * lockedTokenAmount: 用户当前质押的token数量。
+> * rewardTokenAmount: 用户可以获得的奖励token数量。
 > * unlockingTokens: 用户解锁的token信息。expired是到期的区块高度，amount是解锁的token数量。
 
 ## 4. 请求stake操作
