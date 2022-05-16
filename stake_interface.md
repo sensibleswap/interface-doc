@@ -145,7 +145,7 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
 ```
 > * symbol: stake池的符号。
 > * address: 操作者用于保存和接受token的地址。
-> * op: stake操作。1 质押，2 解锁，3 提取，4 收获
+> * op: stake操作。1 质押，2 解锁，3 提取，4 收获, 6 投票
 > * source: 标记调用者的身份，方便查找错误
 
 ### Response
@@ -329,7 +329,7 @@ const sig = toHex(signTx(tx, this.privateKey, script.toASM(), Number(data.satosh
 ```
 code为0时，表示正常返回data, txid为stake操作的交易id。code为1时，表示由错误。错误信息在msg中。
 
-如果code返回99999，表示交易与其他用户产生冲突，可以进行重试。将data.other进行解压后，得到新的data，格式与withdraw接口返回的data格式一样。进行重新签名后，再次调用unlock2接口。参考代码如下:
+如果code返回99999，表示交易与其他用户产生冲突，可以进行重试。将data.other进行解压后，得到新的data，格式与unlock接口返回的data格式一样。进行重新签名后，再次调用unlock2接口。参考代码如下:
 
 ```
 if (response.body.code === 99999) {
@@ -555,3 +555,124 @@ if (response.body.code === 99999) {
     throw Error('failed')
 }
 ```
+
+## 9. 获取投票信息
+
+获取某个token的质押合约的投票信息
+
+### Request
+- Method: **GET**
+- URL: ```/voteinfo?symbol=tbsv-test```
+> * symbol: stake池的符号，/allpairs接口获得。
+
+### Response
+```
+{
+    "code":0,
+    "msg":"",
+    "data":{
+        "47c48bcde4d982b7d0530ca41d68aba44ea2aa96":{
+            "title":"Test Liquidity Farm Vote",
+            "desc":"vote to decide the distribution of farm rewards",
+            "options":[
+                "TSC/BSV",
+                "USDT/BSV",
+                "TSC/USDT"
+            ],
+            "voteSumData":[
+                "0",
+                "0",
+                "110000"
+            ],
+            "beginBlockNum":739700,
+            "endBlockNum":741140
+        }
+    }
+}
+```
+
+data是一个map，其中key是voteID，value是此投票的具体信息。可以同时具有多个投票。
+> * title: 投票的标题。
+> * desc: 投票的具体描述。
+> * options: 投票具体选项。按顺序列出。
+> * voteSumData: 目前的投票信息，对应于options中的每个选择已有的投票数。
+> * beginBlockNum: 投票开始的区块高度。
+> * endBlockNum: 投票结束的区块高度。
+
+
+## 10. 投票
+
+用户进行投票。投票操作需要进行两次网络请求，vote和vote2。用户可以多次投票，最新一次的投票结果覆盖之前的投票。
+
+### Request
+- Methos: **POST**
+- URL: ```/vote```
+- Body:
+```
+{
+    symbol: "tbsv-test",
+    requestIndex: "1",
+    bsvRawTx: "",
+    bsvOutputIndex: 0,
+    voteID: "47c48bcde4d982b7d0530ca41d68aba44ea2aa96",
+    voteOption: 0,
+    confirmVote: true
+}
+```
+
+> * symbol: stake池的符号。
+> * requestIndex: 之前通过reqstakeargs获取的编号。
+> * bsvRawTx: bsv转账raw tx。
+> * bsvOutputIndex: bsv转账tx的outputIndex。
+> * voteID: 从voteinfo中获取的voteID。
+> * voteOption: 投票的的选择。
+> * confirmVote: true: 用户投票。false：取消之前的投票。当confirmVote为false时，voteOption不起作用。
+
+### response
+```
+{
+    "code": 0,
+    "msg": "",
+    "data": {
+        "txHex": "",
+        "scriptHex": "",
+        "satoshis": "100",
+        "inputIndex": 0,
+    }
+}
+```
+获取到vote接口的返回参数后，需要使用之前reqstakeargs传入的address对应的私钥对tx进行签名。签名流程参考unlock。
+
+**注意：由于此接口返回的txHex和scriptHex较大，请求的header里面必须加上{Accept-Encoding: gzip}**
+
+### Request
+- Methos: **POST**
+- URL: ```/vote2```
+- Body: 
+```
+{
+    symbol: "tbsv-test",
+    requestIndex: "1",
+    pubKey: "",
+    sig: ""
+}
+```
+> * symbol: stake池的符号。
+> * requestIndex: 之前通过reqstakeargs获取的编号。
+> * pubKey: address对应的公钥。
+> * sig: address对应的私钥对tx的签名。
+
+### Response
+```
+{
+    "code": 0,
+    "msg": "",
+    "data": {
+        "txid": "88e64bcf3517c864bb4c224b52084d3b3261a57814dceb19f2b8af07934f9cf8",
+        "blockHeight": 70159
+    }
+}
+```
+code为0时，表示正常返回data, txid为stake操作的交易id。code为1时，表示由错误。错误信息在msg中。
+
+如果code返回99999，表示交易与其他用户产生冲突，可以进行重试。将data.other进行解压后，得到新的data，格式与vote接口返回的data格式一样。进行重新签名后，再次调用vote2接口。参考unlock接口。
