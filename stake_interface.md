@@ -116,13 +116,23 @@ code为0时，表示正常返回data。code为1时，表示由错误。错误信
     "data": {
         "lockedTokenAmount": "18000",
         "rewardTokenAmount": "18539999999",
-        "unlockingTokens": [{"expired":737212,"amount":"100000"}]
+        "unlockingTokens": [{"expired":737212,"amount":"100000"}],
+        "voteInfo": {
+            "31d4d1d4bbdaecc04d8df4fc53860e48196d7b63":{
+
+            },
+            "47c48bcde4d982b7d0530ca41d68aba44ea2aa96":{
+                "voteOption":2,
+                "voteAmount":"110000"
+            }
+        }
     }
 }
 ```
 > * lockedTokenAmount: 用户当前质押的token数量。
 > * rewardTokenAmount: 用户可以获得的奖励token数量。
 > * unlockingTokens: 用户解锁的token信息。expired是到期的区块高度，amount是解锁的token数量。
+> * voteInfo: 用户的投票信息。key是voteID，voteOption是投票的选择，voteAmount是投票的数量。
 
 ## 4. 请求stake操作
 
