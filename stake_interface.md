@@ -595,7 +595,8 @@ if (response.body.code === 99999) {
                 "110000"
             ],
             "beginBlockNum":739700,
-            "endBlockNum":741140
+            "endBlockNum":741140,
+            "minVoteAmount": "10000000",
         }
     }
 }
@@ -608,6 +609,7 @@ data是一个map，其中key是voteID，value是此投票的具体信息。可�
 > * voteSumData: 目前的投票信息，对应于options中的每个选择已有的投票数。
 > * beginBlockNum: 投票开始的区块高度。
 > * endBlockNum: 投票结束的区块高度。
+> * minVoteAmount: 投票结果有效所需要的最低的投票数。
 
 
 ## 10. 投票
